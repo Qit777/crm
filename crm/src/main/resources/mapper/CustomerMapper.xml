@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.crm.dao.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.bean.Customer" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_address" property="customerAddress" jdbcType="VARCHAR" />
+    <result column="customer_typeid" property="customerTypeid" jdbcType="INTEGER" />
+    <result column="customer_createtime" property="customerCreatetime" jdbcType="TIMESTAMP" />
+    <result column="customer_createsuer" property="customerCreatesuer" jdbcType="VARCHAR" />
+    <result column="customer_updatetime" property="customerUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="customer_updateuser" property="customerUpdateuser" jdbcType="VARCHAR" />
+    <result column="customer_status" property="customerStatus" jdbcType="INTEGER" />
+    <result column="customer_taxid" property="customerTaxid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, customer_name, customer_address, customer_typeid, customer_createtime, customer_createsuer, 
+    customer_updatetime, customer_updateuser, customer_status, customer_taxid
+  </sql>
+  <select id="selectall" resultMap="BaseResultMap" parameterType="string">
+    select * from customer
+    <where>
+      <if test="name!=null">
+        em_name like concat('%',#{name},'%')
+      </if>
+    </where>
+    order by customer_typeid
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from customer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.crm.bean.Customer" >
+    insert into customer (id, customer_name, customer_address, 
+      customer_typeid, customer_createtime, customer_createsuer, 
+      customer_updatetime, customer_updateuser, 
+      customer_status, customer_taxid)
+    values (#{id,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, #{customerAddress,jdbcType=VARCHAR}, 
+      #{customerTypeid,jdbcType=INTEGER}, #{customerCreatetime,jdbcType=TIMESTAMP}, #{customerCreatesuer,jdbcType=VARCHAR}, 
+      #{customerUpdatetime,jdbcType=TIMESTAMP}, #{customerUpdateuser,jdbcType=VARCHAR}, 
+      #{customerStatus,jdbcType=INTEGER}, #{customerTaxid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.crm.bean.Customer" >
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="customerAddress != null" >
+        customer_address,
+      </if>
+      <if test="customerTypeid != null" >
+        customer_typeid,
+      </if>
+      <if test="customerCreatetime != null" >
+        customer_createtime,
+      </if>
+      <if test="customerCreatesuer != null" >
+        customer_createsuer,
+      </if>
+      <if test="customerUpdatetime != null" >
+        customer_updatetime,
+      </if>
+      <if test="customerUpdateuser != null" >
+        customer_updateuser,
+      </if>
+      <if test="customerStatus != null" >
+        customer_status,
+      </if>
+      <if test="customerTaxid != null" >
+        customer_taxid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null" >
+        #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerTypeid != null" >
+        #{customerTypeid,jdbcType=INTEGER},
+      </if>
+      <if test="customerCreatetime != null" >
+        #{customerCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerCreatesuer != null" >
+        #{customerCreatesuer,jdbcType=VARCHAR},
+      </if>
+      <if test="customerUpdatetime != null" >
+        #{customerUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerUpdateuser != null" >
+        #{customerUpdateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="customerStatus != null" >
+        #{customerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="customerTaxid != null" >
+        #{customerTaxid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.crm.bean.Customer" >
+    update customer
+    <set >
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null" >
+        customer_address = #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerTypeid != null" >
+        customer_typeid = #{customerTypeid,jdbcType=INTEGER},
+      </if>
+      <if test="customerCreatetime != null" >
+        customer_createtime = #{customerCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerCreatesuer != null" >
+        customer_createsuer = #{customerCreatesuer,jdbcType=VARCHAR},
+      </if>
+      <if test="customerUpdatetime != null" >
+        customer_updatetime = #{customerUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerUpdateuser != null" >
+        customer_updateuser = #{customerUpdateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="customerStatus != null" >
+        customer_status = #{customerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="customerTaxid != null" >
+        customer_taxid = #{customerTaxid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.crm.bean.Customer" >
+    update customer
+    set customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_address = #{customerAddress,jdbcType=VARCHAR},
+      customer_typeid = #{customerTypeid,jdbcType=INTEGER},
+      customer_createtime = #{customerCreatetime,jdbcType=TIMESTAMP},
+      customer_createsuer = #{customerCreatesuer,jdbcType=VARCHAR},
+      customer_updatetime = #{customerUpdatetime,jdbcType=TIMESTAMP},
+      customer_updateuser = #{customerUpdateuser,jdbcType=VARCHAR},
+      customer_status = #{customerStatus,jdbcType=INTEGER},
+      customer_taxid = #{customerTaxid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.crm.dao.EmployMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.bean.Employ" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="em_name" property="emName" jdbcType="VARCHAR" />
+    <result column="em_sno" property="emSno" jdbcType="VARCHAR" />
+    <result column="em_phone" property="emPhone" jdbcType="VARCHAR" />
+    <result column="em_sex" property="emSex" jdbcType="VARCHAR" />
+    <result column="em_post" property="emPost" jdbcType="VARCHAR" />
+    <result column="em_address" property="emAddress" jdbcType="VARCHAR" />
+    <result column="em_depid" property="emDepid" jdbcType="INTEGER" />
+    <result column="em_state" property="emState" jdbcType="INTEGER" />
+    <result column="em_createtime" property="emCreatetime" jdbcType="TIMESTAMP" />
+    <result column="em_createuser" property="emCreateuser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, em_name, em_sno, em_phone, em_sex, em_post, em_address, em_depid, em_state, em_createtime, 
+    em_createuser
+  </sql>
+  <select id="selectall" resultMap="BaseResultMap" parameterType="string">
+    select * from employ
+    <where>
+      <if test="name!=null">
+        em_name like concat('%',#{name},'%')
+      </if>
+    </where>
+    order by em_sno
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from employ
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from employ
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.crm.bean.Employ" >
+    insert into employ (id, em_name, em_sno, 
+      em_phone, em_sex, em_post, 
+      em_address, em_depid, em_state, 
+      em_createtime, em_createuser)
+    values (#{id,jdbcType=INTEGER}, #{emName,jdbcType=VARCHAR}, #{emSno,jdbcType=VARCHAR}, 
+      #{emPhone,jdbcType=VARCHAR}, #{emSex,jdbcType=VARCHAR}, #{emPost,jdbcType=VARCHAR}, 
+      #{emAddress,jdbcType=VARCHAR}, #{emDepid,jdbcType=INTEGER}, #{emState,jdbcType=INTEGER}, 
+      #{emCreatetime,jdbcType=TIMESTAMP}, #{emCreateuser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.crm.bean.Employ" >
+    insert into employ
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="emName != null" >
+        em_name,
+      </if>
+      <if test="emSno != null" >
+        em_sno,
+      </if>
+      <if test="emPhone != null" >
+        em_phone,
+      </if>
+      <if test="emSex != null" >
+        em_sex,
+      </if>
+      <if test="emPost != null" >
+        em_post,
+      </if>
+      <if test="emAddress != null" >
+        em_address,
+      </if>
+      <if test="emDepid != null" >
+        em_depid,
+      </if>
+      <if test="emState != null" >
+        em_state,
+      </if>
+      <if test="emCreatetime != null" >
+        em_createtime,
+      </if>
+      <if test="emCreateuser != null" >
+        em_createuser,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="emName != null" >
+        #{emName,jdbcType=VARCHAR},
+      </if>
+      <if test="emSno != null" >
+        #{emSno,jdbcType=VARCHAR},
+      </if>
+      <if test="emPhone != null" >
+        #{emPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="emSex != null" >
+        #{emSex,jdbcType=VARCHAR},
+      </if>
+      <if test="emPost != null" >
+        #{emPost,jdbcType=VARCHAR},
+      </if>
+      <if test="emAddress != null" >
+        #{emAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="emDepid != null" >
+        #{emDepid,jdbcType=INTEGER},
+      </if>
+      <if test="emState != null" >
+        #{emState,jdbcType=INTEGER},
+      </if>
+      <if test="emCreatetime != null" >
+        #{emCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="emCreateuser != null" >
+        #{emCreateuser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.crm.bean.Employ" >
+    update employ
+    <set >
+      <if test="emName != null" >
+        em_name = #{emName,jdbcType=VARCHAR},
+      </if>
+      <if test="emSno != null" >
+        em_sno = #{emSno,jdbcType=VARCHAR},
+      </if>
+      <if test="emPhone != null" >
+        em_phone = #{emPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="emSex != null" >
+        em_sex = #{emSex,jdbcType=VARCHAR},
+      </if>
+      <if test="emPost != null" >
+        em_post = #{emPost,jdbcType=VARCHAR},
+      </if>
+      <if test="emAddress != null" >
+        em_address = #{emAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="emDepid != null" >
+        em_depid = #{emDepid,jdbcType=INTEGER},
+      </if>
+      <if test="emState != null" >
+        em_state = #{emState,jdbcType=INTEGER},
+      </if>
+      <if test="emCreatetime != null" >
+        em_createtime = #{emCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="emCreateuser != null" >
+        em_createuser = #{emCreateuser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.crm.bean.Employ" >
+    update employ
+    set em_name = #{emName,jdbcType=VARCHAR},
+      em_sno = #{emSno,jdbcType=VARCHAR},
+      em_phone = #{emPhone,jdbcType=VARCHAR},
+      em_sex = #{emSex,jdbcType=VARCHAR},
+      em_post = #{emPost,jdbcType=VARCHAR},
+      em_address = #{emAddress,jdbcType=VARCHAR},
+      em_depid = #{emDepid,jdbcType=INTEGER},
+      em_state = #{emState,jdbcType=INTEGER},
+      em_createtime = #{emCreatetime,jdbcType=TIMESTAMP},
+      em_createuser = #{emCreateuser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.crm.dao.LinkManMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.bean.LinkMan" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="linkman_name" property="linkmanName" jdbcType="VARCHAR" />
+    <result column="linkman_phone1" property="linkmanPhone1" jdbcType="VARCHAR" />
+    <result column="linkman_phone2" property="linkmanPhone2" jdbcType="VARCHAR" />
+    <result column="linkman_reamk" property="linkmanReamk" jdbcType="VARCHAR" />
+    <result column="linkman_post" property="linkmanPost" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, linkman_name, linkman_phone1, linkman_phone2, linkman_reamk, linkman_post
+  </sql>
+  <select id="selectall" resultMap="BaseResultMap" parameterType="string">
+    select * from linkman
+    <where>
+      <if test="name!=null">
+        linkman_name like concat('%',#{name},'%')
+      </if>
+    </where>
+    order by linkman_name
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from linkman
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from linkman
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.crm.bean.LinkMan" >
+    insert into linkman (id, linkman_name, linkman_phone1, 
+      linkman_phone2, linkman_reamk, linkman_post
+      )
+    values (#{id,jdbcType=INTEGER}, #{linkmanName,jdbcType=VARCHAR}, #{linkmanPhone1,jdbcType=VARCHAR}, 
+      #{linkmanPhone2,jdbcType=VARCHAR}, #{linkmanReamk,jdbcType=VARCHAR}, #{linkmanPost,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.crm.bean.LinkMan" >
+    insert into linkman
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="linkmanName != null" >
+        linkman_name,
+      </if>
+      <if test="linkmanPhone1 != null" >
+        linkman_phone1,
+      </if>
+      <if test="linkmanPhone2 != null" >
+        linkman_phone2,
+      </if>
+      <if test="linkmanReamk != null" >
+        linkman_reamk,
+      </if>
+      <if test="linkmanPost != null" >
+        linkman_post,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="linkmanName != null" >
+        #{linkmanName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkmanPhone1 != null" >
+        #{linkmanPhone1,jdbcType=VARCHAR},
+      </if>
+      <if test="linkmanPhone2 != null" >
+        #{linkmanPhone2,jdbcType=VARCHAR},
+      </if>
+      <if test="linkmanReamk != null" >
+        #{linkmanReamk,jdbcType=VARCHAR},
+      </if>
+      <if test="linkmanPost != null" >
+        #{linkmanPost,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.crm.bean.LinkMan" >
+    update linkman
+    <set >
+      <if test="linkmanName != null" >
+        linkman_name = #{linkmanName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkmanPhone1 != null" >
+        linkman_phone1 = #{linkmanPhone1,jdbcType=VARCHAR},
+      </if>
+      <if test="linkmanPhone2 != null" >
+        linkman_phone2 = #{linkmanPhone2,jdbcType=VARCHAR},
+      </if>
+      <if test="linkmanReamk != null" >
+        linkman_reamk = #{linkmanReamk,jdbcType=VARCHAR},
+      </if>
+      <if test="linkmanPost != null" >
+        linkman_post = #{linkmanPost,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.crm.bean.LinkMan" >
+    update linkman
+    set linkman_name = #{linkmanName,jdbcType=VARCHAR},
+      linkman_phone1 = #{linkmanPhone1,jdbcType=VARCHAR},
+      linkman_phone2 = #{linkmanPhone2,jdbcType=VARCHAR},
+      linkman_reamk = #{linkmanReamk,jdbcType=VARCHAR},
+      linkman_post = #{linkmanPost,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

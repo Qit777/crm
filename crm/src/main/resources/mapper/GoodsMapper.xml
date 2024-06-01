@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.crm.dao.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.bean.Goods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_cateid" property="goodsCateid" jdbcType="INTEGER" />
+    <result column="goods_cover" property="goodsCover" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="REAL" />
+    <result column="goods_createtime" property="goodsCreatetime" jdbcType="TIMESTAMP" />
+    <result column="goods_createuser" property="goodsCreateuser" jdbcType="VARCHAR" />
+    <result column="goods_updatetime" property="goodsUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="goods_updateuser" property="goodsUpdateuser" jdbcType="VARCHAR" />
+    <result column="goods_status" property="goodsStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.neusoft.crm.bean.Goods" extends="BaseResultMap" >
+    <result column="goods_desc" property="goodsDesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, goods_name, goods_cateid, goods_cover, goods_price, goods_createtime, goods_createuser, 
+    goods_updatetime, goods_updateuser, goods_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    goods_desc
+  </sql>
+  <select id="selectall" resultMap="BaseResultMap" parameterType="string">
+    select * from goods
+    <where>
+      <if test="name!=null">
+        em_name like concat('%',#{name},'%')
+      </if>
+    </where>
+    order by goods_cateid
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.crm.bean.Goods" >
+    insert into goods (id, goods_name, goods_cateid, 
+      goods_cover, goods_price, goods_createtime, 
+      goods_createuser, goods_updatetime, goods_updateuser, 
+      goods_status, goods_desc)
+    values (#{id,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsCateid,jdbcType=INTEGER}, 
+      #{goodsCover,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=REAL}, #{goodsCreatetime,jdbcType=TIMESTAMP}, 
+      #{goodsCreateuser,jdbcType=VARCHAR}, #{goodsUpdatetime,jdbcType=TIMESTAMP}, #{goodsUpdateuser,jdbcType=VARCHAR}, 
+      #{goodsStatus,jdbcType=INTEGER}, #{goodsDesc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.crm.bean.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsCateid != null" >
+        goods_cateid,
+      </if>
+      <if test="goodsCover != null" >
+        goods_cover,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="goodsCreatetime != null" >
+        goods_createtime,
+      </if>
+      <if test="goodsCreateuser != null" >
+        goods_createuser,
+      </if>
+      <if test="goodsUpdatetime != null" >
+        goods_updatetime,
+      </if>
+      <if test="goodsUpdateuser != null" >
+        goods_updateuser,
+      </if>
+      <if test="goodsStatus != null" >
+        goods_status,
+      </if>
+      <if test="goodsDesc != null" >
+        goods_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCateid != null" >
+        #{goodsCateid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsCover != null" >
+        #{goodsCover,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=REAL},
+      </if>
+      <if test="goodsCreatetime != null" >
+        #{goodsCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsCreateuser != null" >
+        #{goodsCreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUpdatetime != null" >
+        #{goodsUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsUpdateuser != null" >
+        #{goodsUpdateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStatus != null" >
+        #{goodsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDesc != null" >
+        #{goodsDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.crm.bean.Goods" >
+    update goods
+    <set >
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCateid != null" >
+        goods_cateid = #{goodsCateid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsCover != null" >
+        goods_cover = #{goodsCover,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=REAL},
+      </if>
+      <if test="goodsCreatetime != null" >
+        goods_createtime = #{goodsCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsCreateuser != null" >
+        goods_createuser = #{goodsCreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUpdatetime != null" >
+        goods_updatetime = #{goodsUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsUpdateuser != null" >
+        goods_updateuser = #{goodsUpdateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStatus != null" >
+        goods_status = #{goodsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDesc != null" >
+        goods_desc = #{goodsDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.neusoft.crm.bean.Goods" >
+    update goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_cateid = #{goodsCateid,jdbcType=INTEGER},
+      goods_cover = #{goodsCover,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=REAL},
+      goods_createtime = #{goodsCreatetime,jdbcType=TIMESTAMP},
+      goods_createuser = #{goodsCreateuser,jdbcType=VARCHAR},
+      goods_updatetime = #{goodsUpdatetime,jdbcType=TIMESTAMP},
+      goods_updateuser = #{goodsUpdateuser,jdbcType=VARCHAR},
+      goods_status = #{goodsStatus,jdbcType=INTEGER},
+      goods_desc = #{goodsDesc,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.crm.bean.Goods" >
+    update goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_cateid = #{goodsCateid,jdbcType=INTEGER},
+      goods_cover = #{goodsCover,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=REAL},
+      goods_createtime = #{goodsCreatetime,jdbcType=TIMESTAMP},
+      goods_createuser = #{goodsCreateuser,jdbcType=VARCHAR},
+      goods_updatetime = #{goodsUpdatetime,jdbcType=TIMESTAMP},
+      goods_updateuser = #{goodsUpdateuser,jdbcType=VARCHAR},
+      goods_status = #{goodsStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

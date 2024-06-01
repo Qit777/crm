@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.crm.dao.GoodsCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.bean.GoodsCategory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cate_name" property="cateName" jdbcType="VARCHAR" />
+    <result column="cate_order" property="cateOrder" jdbcType="VARCHAR" />
+    <result column="cate_pid" property="catePid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cate_name, cate_order, cate_pid
+  </sql>
+  <select id="selectall" resultMap="BaseResultMap" parameterType="string">
+    select * from goods_category
+    <where>
+      <if test="name!=null">
+        em_name like concat('%',#{name},'%')
+      </if>
+    </where>
+    order by cate_order
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.neusoft.crm.bean.GoodsCategory" >
+    insert into goods_category (id, cate_name, cate_order, 
+      cate_pid)
+    values (#{id,jdbcType=INTEGER}, #{cateName,jdbcType=VARCHAR}, #{cateOrder,jdbcType=VARCHAR}, 
+      #{catePid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.neusoft.crm.bean.GoodsCategory" >
+    insert into goods_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cateName != null" >
+        cate_name,
+      </if>
+      <if test="cateOrder != null" >
+        cate_order,
+      </if>
+      <if test="catePid != null" >
+        cate_pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cateName != null" >
+        #{cateName,jdbcType=VARCHAR},
+      </if>
+      <if test="cateOrder != null" >
+        #{cateOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="catePid != null" >
+        #{catePid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.neusoft.crm.bean.GoodsCategory" >
+    update goods_category
+    <set >
+      <if test="cateName != null" >
+        cate_name = #{cateName,jdbcType=VARCHAR},
+      </if>
+      <if test="cateOrder != null" >
+        cate_order = #{cateOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="catePid != null" >
+        cate_pid = #{catePid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.neusoft.crm.bean.GoodsCategory" >
+    update goods_category
+    set cate_name = #{cateName,jdbcType=VARCHAR},
+      cate_order = #{cateOrder,jdbcType=VARCHAR},
+      cate_pid = #{catePid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
