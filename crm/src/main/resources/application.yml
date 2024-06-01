@@ -22,4 +22,3 @@ spring:
       name: ywwy
     base-package: com.neusoft.crm.controller
     base-path: /**
- 
